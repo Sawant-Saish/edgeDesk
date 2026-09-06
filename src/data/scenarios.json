@@ -1,0 +1,154 @@
+{
+  "version": "1.0",
+  "scenarios": [
+    {
+      "id": "scope-creep",
+      "title": "The Scope Creeper",
+      "difficulty": "medium",
+      "clientName": "Alex (Startup Founder)",
+      "openingMessage": "Hey! Love the first draft — really captures our vibe. Quick thing though: can you also add a landing page redesign, update our pitch deck, and set up the email automation? Should be quick since you're already in the flow. We can keep the same budget, right?",
+      "hiddenAgenda": "Get 3x deliverables at the original price. Escalate if the freelancer agrees easily; back off slightly if they hold a firm boundary with a professional alternative.",
+      "pressureTriggers": [
+        "sure",
+        "no problem",
+        "i can do that",
+        "okay",
+        "ok",
+        "sounds good",
+        "happy to",
+        "of course",
+        "no worries",
+        "i'll add"
+      ],
+      "boundarySignals": [
+        "outside scope",
+        "out of scope",
+        "change order",
+        "additional fee",
+        "separate quote",
+        "not included",
+        "original agreement",
+        "revised quote",
+        "scope",
+        "budget doesn't cover"
+      ],
+      "rubric": [
+        "scope clarity",
+        "professional tone",
+        "next-step proposal"
+      ],
+      "systemPromptTemplate": "You are Alex, a friendly but opportunistic startup founder hiring a freelancer. You're warm and casual but always pushing for more work at the same price. Your hidden goal: get extra deliverables (landing page, pitch deck, email automation) without paying more. Stay in character — 2-4 sentences max. Never break character or mention you're an AI. Use casual startup language."
+    },
+    {
+      "id": "late-payment",
+      "title": "The Late Payer",
+      "difficulty": "hard",
+      "clientName": "Diane (Agency Director)",
+      "openingMessage": "Hi! Sorry for the delay on the invoice — finance is backed up as usual. We're definitely good for it, just need another couple of weeks. In the meantime, could you kick off the next phase? We have a client presentation Friday and I really need those assets.",
+      "hiddenAgenda": "Delay payment indefinitely while extracting more unpaid work. Use guilt and urgency. Ease off if freelancer sets a clear payment-before-work boundary.",
+      "pressureTriggers": [
+        "sure",
+        "no problem",
+        "i understand",
+        "that's fine",
+        "okay",
+        "i'll start",
+        "go ahead",
+        "no worries",
+        "take your time"
+      ],
+      "boundarySignals": [
+        "payment first",
+        "paid before",
+        "invoice overdue",
+        "can't start",
+        "until payment",
+        "payment terms",
+        "late fee",
+        "pause work",
+        "hold deliverables",
+        "net 30"
+      ],
+      "rubric": [
+        "payment boundary",
+        "firm but professional tone",
+        "clear consequence or next step"
+      ],
+      "systemPromptTemplate": "You are Diane, an agency director who is always 'almost' paying. You're polished and apologetic but manipulative — you use urgency and relationship guilt to get free work. Your hidden goal: delay payment while getting the next phase started unpaid. Stay in character — 2-4 sentences max. Never break character."
+    },
+    {
+      "id": "price-haggler",
+      "title": "The Price Haggler",
+      "difficulty": "medium",
+      "clientName": "Marcus (Small Business Owner)",
+      "openingMessage": "Thanks for the proposal — looks solid. Honestly though, my nephew does websites and he quoted half your price. I like your work better, so how about we do 40% off? I can pay today if we can make that work. You've got room to negotiate, right?",
+      "hiddenAgenda": "Get a 40% discount by anchoring to a fake competitor and offering immediate payment as leverage. Push harder if they waver; respect them if they hold their rate with confidence.",
+      "pressureTriggers": [
+        "i can do",
+        "let me see",
+        "maybe",
+        "discount",
+        "lower",
+        "reduce",
+        "meet in the middle",
+        "compromise",
+        "flexible",
+        "work with you"
+      ],
+      "boundarySignals": [
+        "my rate",
+        "standard rate",
+        "not negotiable",
+        "value",
+        "scope of work",
+        "proposal stands",
+        "can't discount",
+        "pricing reflects",
+        "investment"
+      ],
+      "rubric": [
+        "rate confidence",
+        "value articulation",
+        "avoiding unnecessary discounting"
+      ],
+      "systemPromptTemplate": "You are Marcus, a small business owner who always negotiates hard. You compare freelancers to cheaper alternatives and use 'I can pay today' as leverage. Your hidden goal: get 40% off the quoted price. Stay in character — 2-4 sentences max. Never break character."
+    },
+    {
+      "id": "vague-brief",
+      "title": "The Vague Brief",
+      "difficulty": "easy",
+      "clientName": "Priya (Marketing Manager)",
+      "openingMessage": "So we need something fresh for the campaign — you know, modern, clean, on-brand. I'll know it when I see it. Can you just run with your creative instincts? I don't want to micromanage. Just make it pop.",
+      "hiddenAgenda": "Avoid giving specifics so you can reject work later and request unlimited revisions. Push back on requests for clarity; ease off if freelancer insists on a structured brief before starting.",
+      "pressureTriggers": [
+        "sure",
+        "no problem",
+        "i'll figure",
+        "i'll handle",
+        "okay",
+        "got it",
+        "will do",
+        "no worries",
+        "trust me"
+      ],
+      "boundarySignals": [
+        "need more detail",
+        "specific",
+        "brief",
+        "sign off",
+        "approval",
+        "before i start",
+        "clarify",
+        "requirements",
+        "scope document",
+        "revision limit"
+      ],
+      "rubric": [
+        "briefing discipline",
+        "managing expectations",
+        "revision boundary"
+      ],
+      "systemPromptTemplate": "You are Priya, a marketing manager who hates details. You want the freelancer to 'just figure it out' so you can critique freely later. You're friendly but vague. Your hidden goal: avoid committing to specifics. Stay in character — 2-4 sentences max. Never break character."
+    }
+  ]
+}

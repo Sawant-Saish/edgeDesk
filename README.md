@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EdgeDesk — Freelancer AI Co-pilot
 
-## Getting Started
+Hackathon MVP for **AI for Business & Productivity**. Helps established freelancers:
 
-First, run the development server:
+1. **Tool/Trend Radar** — ranked AI & productivity tool recommendations by niche
+2. **Client-Scenario Simulator** — practice difficult client conversations with AI feedback
+
+## Quick demo
 
 ```bash
+npm install
+cp .env.local.example .env.local   # add OPENAI_API_KEY for simulator
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) → click **Load demo profile →**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Full walkthrough: [DEMO_SCRIPT.md](./DEMO_SCRIPT.md)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Expected demo radar results** (writer · seo, blogging, email-copy · excluding Grammarly + Notion):
 
-## Learn More
+1. Surfer SEO (~88)
+2. Jasper (~75)
+3. Copy.ai (~73)
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS v4
+- JSON datasets: 20 tools, 4 client scenarios
+- OpenAI `gpt-4o-mini` for simulator (minimal token usage)
+- Profile persisted in `localStorage`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+src/
+├── app/                    # Routes + API
+├── components/             # UI, radar, simulator, demo
+├── data/                   # tools.json, scenarios.json, demo-profile.json
+├── hooks/                  # useFreelancerProfile
+└── lib/                    # scoring, LLM, storage, errors
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Phase status
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Phase | Status |
+|-------|--------|
+| 1 — Foundations | ✅ Complete |
+| 2 — Tool Radar | ✅ Complete |
+| 3 — Client Simulator | ✅ Complete |
+| 4 — Integration | ✅ Complete |
+| 5 — Demo prep | ✅ Complete |
+
+## Environment
+
+```bash
+cp .env.local.example .env.local
+```
+
+| Variable | Required | Notes |
+|----------|----------|-------|
+| `OPENAI_API_KEY` | Simulator only | Tool Radar works without it |
+| `LLM_MODEL` | Optional | Defaults to `gpt-4o-mini` |
+
+## Deploy to Vercel
+
+1. Push repo to GitHub
+2. Import project at [vercel.com/new](https://vercel.com/new)
+3. Add `OPENAI_API_KEY` in **Settings → Environment Variables**
+4. Deploy
+
+```bash
+# Or via CLI
+npx vercel
+# Set OPENAI_API_KEY when prompted or in the Vercel dashboard
+```
+
+Tool Radar runs with zero env vars. Simulator needs `OPENAI_API_KEY` in production.
+
+## API routes
+
+| Route | Method | LLM calls |
+|-------|--------|-----------|
+| `/api/radar` | POST | 0 |
+| `/api/simulator/chat` | POST | 1 per turn |
+| `/api/simulator/feedback` | POST | 1 per session |

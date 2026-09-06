@@ -1,0 +1,323 @@
+{
+  "version": "1.0",
+  "tools": [
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "category": "dev",
+      "niches": ["developer"],
+      "skills": ["coding", "refactoring", "debugging", "api-design"],
+      "roiScore": 9,
+      "pricing": "freemium",
+      "oneLiner": "AI-native IDE that speeds up shipping and refactoring.",
+      "whyTemplates": {
+        "developer": "You ship code daily — an AI IDE cuts iteration loops without changing your stack.",
+        "default": "High ROI for technical freelancers who bill by deliverable."
+      },
+      "url": "https://cursor.com"
+    },
+    {
+      "id": "github-copilot",
+      "name": "GitHub Copilot",
+      "category": "dev",
+      "niches": ["developer"],
+      "skills": ["coding", "autocomplete", "testing", "documentation"],
+      "roiScore": 8,
+      "pricing": "paid",
+      "oneLiner": "Inline code suggestions across your editor and GitHub.",
+      "whyTemplates": {
+        "developer": "Autocomplete across repos saves hours on boilerplate and tests each week.",
+        "default": "Strong fit for developers who want low-friction AI in existing workflows."
+      },
+      "url": "https://github.com/features/copilot"
+    },
+    {
+      "id": "v0",
+      "name": "v0 by Vercel",
+      "category": "dev",
+      "niches": ["developer", "designer"],
+      "skills": ["ui-design", "prototyping", "react", "frontend"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "Generate UI components and prototypes from prompts.",
+      "whyTemplates": {
+        "developer": "Ship client-facing UI faster — generate components you can refine instead of starting from scratch.",
+        "designer": "Bridge design and dev: turn mockup ideas into working React prototypes for client review.",
+        "default": "Accelerates frontend delivery for freelancers juggling design and code."
+      },
+      "url": "https://v0.dev"
+    },
+    {
+      "id": "replit-agent",
+      "name": "Replit Agent",
+      "category": "dev",
+      "niches": ["developer"],
+      "skills": ["coding", "deployment", "prototyping", "fullstack"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "Autonomous coding agent that builds and deploys small apps.",
+      "whyTemplates": {
+        "developer": "Great for quick client MVPs — spin up and deploy prototypes without managing infra.",
+        "default": "Useful when you need to demo ideas fast for non-technical clients."
+      },
+      "url": "https://replit.com"
+    },
+    {
+      "id": "grammarly",
+      "name": "Grammarly",
+      "category": "writing",
+      "niches": ["writer", "marketer"],
+      "skills": ["editing", "proofreading", "email-copy", "tone"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "AI writing assistant for grammar, tone, and clarity.",
+      "whyTemplates": {
+        "writer": "Catches errors and tone mismatches before client delivery — fewer revision rounds.",
+        "marketer": "Keeps campaign copy polished across channels without a separate editor pass.",
+        "default": "Baseline quality control for any client-facing writing."
+      },
+      "url": "https://grammarly.com"
+    },
+    {
+      "id": "jasper",
+      "name": "Jasper",
+      "category": "writing",
+      "niches": ["writer", "marketer"],
+      "skills": ["copywriting", "blogging", "brand-voice", "content-strategy"],
+      "roiScore": 8,
+      "pricing": "paid",
+      "oneLiner": "Brand-aware AI copywriting for marketing and content teams.",
+      "whyTemplates": {
+        "writer": "Scale long-form and campaign copy while keeping a consistent brand voice per client.",
+        "marketer": "Draft ad variants and landing copy faster — you refine strategy, not first drafts.",
+        "default": "Best when you manage multiple client voices and need volume."
+      },
+      "url": "https://jasper.ai"
+    },
+    {
+      "id": "surfer-seo",
+      "name": "Surfer SEO",
+      "category": "writing",
+      "niches": ["writer", "marketer"],
+      "skills": ["seo", "content-strategy", "keyword-research", "blogging"],
+      "roiScore": 9,
+      "pricing": "paid",
+      "oneLiner": "Data-driven content optimization for search rankings.",
+      "whyTemplates": {
+        "writer": "SEO clients expect data-backed briefs — Surfer turns guesswork into defensible outlines.",
+        "marketer": "Rank content faster with SERP-aware recommendations clients can see in reports.",
+        "default": "High ROI if SEO is part of your service offering."
+      },
+      "url": "https://surferseo.com"
+    },
+    {
+      "id": "copy-ai",
+      "name": "Copy.ai",
+      "category": "writing",
+      "niches": ["writer", "marketer"],
+      "skills": ["copywriting", "email-copy", "social-media", "ad-copy"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "Templates and workflows for marketing copy at speed.",
+      "whyTemplates": {
+        "marketer": "Batch social and email variants in one sitting — strong for retainer clients.",
+        "writer": "Good for short-form bursts when you're juggling multiple deliverables.",
+        "default": "Solid starter for freelancers who need volume without Jasper's price tag."
+      },
+      "url": "https://copy.ai"
+    },
+    {
+      "id": "notion-ai",
+      "name": "Notion AI",
+      "category": "writing",
+      "niches": ["writer", "pm", "marketer", "researcher"],
+      "skills": ["documentation", "summarization", "brainstorming", "project-notes"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "AI writing and summarization inside your Notion workspace.",
+      "whyTemplates": {
+        "writer": "Summarize research and client calls into briefs without leaving your notes.",
+        "pm": "Turn meeting notes into action items and status updates in one place.",
+        "default": "High ROI if Notion is already your client hub."
+      },
+      "url": "https://notion.so/product/ai"
+    },
+    {
+      "id": "figma-ai",
+      "name": "Figma AI",
+      "category": "design",
+      "niches": ["designer"],
+      "skills": ["ui-design", "prototyping", "wireframing", "design-systems"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "AI-assisted design tools inside Figma for faster iteration.",
+      "whyTemplates": {
+        "designer": "Generate layout variants and rename layers — spend time on craft, not grunt work.",
+        "default": "Essential if Figma is your primary delivery tool."
+      },
+      "url": "https://figma.com/ai"
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "category": "design",
+      "niches": ["designer", "marketer"],
+      "skills": ["illustration", "concept-art", "branding", "visual-storytelling"],
+      "roiScore": 8,
+      "pricing": "paid",
+      "oneLiner": "Generative image creation for concepts and campaign visuals.",
+      "whyTemplates": {
+        "designer": "Rapid concept exploration before committing to final assets — clients love seeing options fast.",
+        "marketer": "Produce campaign visuals and mood boards without a full photo shoot budget.",
+        "default": "High ROI for visual freelancers who sell concepts, not just polish."
+      },
+      "url": "https://midjourney.com"
+    },
+    {
+      "id": "canva-magic",
+      "name": "Canva Magic Studio",
+      "category": "design",
+      "niches": ["designer", "marketer"],
+      "skills": ["social-media", "presentation", "branding", "templates"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "AI design tools for social, decks, and quick client deliverables.",
+      "whyTemplates": {
+        "marketer": "Batch social assets for clients who need speed over bespoke craft.",
+        "designer": "Hand off templated deliverables faster while you focus on premium work.",
+        "default": "Great when clients want fast turnaround on standard formats."
+      },
+      "url": "https://canva.com/magic"
+    },
+    {
+      "id": "firefly",
+      "name": "Adobe Firefly",
+      "category": "design",
+      "niches": ["designer"],
+      "skills": ["photo-editing", "generative-fill", "branding", "illustration"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "Commercial-safe generative AI integrated with Creative Cloud.",
+      "whyTemplates": {
+        "designer": "Generative fill and text effects in Photoshop — commercial-safe for client work.",
+        "default": "Best if you're already in the Adobe ecosystem."
+      },
+      "url": "https://firefly.adobe.com"
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "category": "research",
+      "niches": ["researcher", "writer", "marketer", "pm"],
+      "skills": ["research", "fact-checking", "summarization", "competitive-analysis"],
+      "roiScore": 9,
+      "pricing": "freemium",
+      "oneLiner": "AI search with cited sources for fast, verifiable research.",
+      "whyTemplates": {
+        "researcher": "Cited answers cut hours of tab-hopping — clients trust sourced summaries.",
+        "writer": "Background research for articles and whitepapers with links you can footnote.",
+        "marketer": "Competitive and market research with sources for strategy decks.",
+        "default": "Replaces scattered Googling with one research pass."
+      },
+      "url": "https://perplexity.ai"
+    },
+    {
+      "id": "elicit",
+      "name": "Elicit",
+      "category": "research",
+      "niches": ["researcher", "writer"],
+      "skills": ["literature-review", "research", "summarization", "academic-writing"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "AI research assistant for academic and technical literature.",
+      "whyTemplates": {
+        "researcher": "Systematic lit reviews in hours, not days — essential for evidence-based deliverables.",
+        "writer": "Back technical and thought-leadership pieces with real paper summaries.",
+        "default": "High ROI for research-heavy freelance niches."
+      },
+      "url": "https://elicit.com"
+    },
+    {
+      "id": "consensus",
+      "name": "Consensus",
+      "category": "research",
+      "niches": ["researcher", "writer"],
+      "skills": ["fact-checking", "research", "data-synthesis", "reporting"],
+      "roiScore": 7,
+      "pricing": "freemium",
+      "oneLiner": "Search engine over scientific papers with consensus summaries.",
+      "whyTemplates": {
+        "researcher": "Quickly answer 'what does the research say?' for client reports.",
+        "writer": "Add credibility to health, science, or policy content with paper-backed claims.",
+        "default": "Strong when clients need evidence, not opinions."
+      },
+      "url": "https://consensus.app"
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "category": "pm-crm",
+      "niches": ["developer", "pm"],
+      "skills": ["project-management", "issue-tracking", "roadmapping", "client-updates"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "Fast issue tracking and project management for product teams.",
+      "whyTemplates": {
+        "developer": "Share progress with technical clients in a tool that feels native to dev workflows.",
+        "pm": "Lightweight PM that doesn't slow you down — clients see status without Slack chaos.",
+        "default": "Professional project visibility without enterprise CRM overhead."
+      },
+      "url": "https://linear.app"
+    },
+    {
+      "id": "hubspot-ai",
+      "name": "HubSpot AI",
+      "category": "pm-crm",
+      "niches": ["marketer", "pm"],
+      "skills": ["crm", "email-automation", "lead-nurturing", "sales"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "CRM with AI for content, email, and pipeline management.",
+      "whyTemplates": {
+        "marketer": "Manage client campaigns and pipelines in one place — AI drafts emails and reports.",
+        "pm": "Track multiple client relationships without a separate sales stack.",
+        "default": "High ROI when you run marketing retainers and need CRM + content."
+      },
+      "url": "https://hubspot.com/products/artificial-intelligence"
+    },
+    {
+      "id": "fireflies",
+      "name": "Fireflies.ai",
+      "category": "pm-crm",
+      "niches": ["pm", "writer", "marketer", "researcher"],
+      "skills": ["meeting-notes", "transcription", "summarization", "client-calls"],
+      "roiScore": 9,
+      "pricing": "freemium",
+      "oneLiner": "AI meeting transcription with summaries and action items.",
+      "whyTemplates": {
+        "pm": "Never miss a client decision — auto-summaries become your project paper trail.",
+        "writer": "Turn discovery calls into briefs without manual note-taking.",
+        "marketer": "Capture campaign kickoff decisions and sync to your task list.",
+        "default": "One of the highest-ROI tools for anyone on client calls weekly."
+      },
+      "url": "https://fireflies.ai"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "category": "pm-crm",
+      "niches": ["pm", "writer", "developer", "marketer"],
+      "skills": ["documentation", "project-management", "wikis", "client-portals"],
+      "roiScore": 8,
+      "pricing": "freemium",
+      "oneLiner": "All-in-one workspace for notes, projects, and client wikis.",
+      "whyTemplates": {
+        "pm": "Client portals and project hubs in one link — reduces 'where's that doc?' emails.",
+        "writer": "Centralize briefs, drafts, and feedback per client.",
+        "developer": "Lightweight specs and handoff docs clients can actually read.",
+        "default": "Foundation tool — pair with Notion AI if you adopt it."
+      },
+      "url": "https://notion.so"
+    }
+  ]
+}
