@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ResumeUpload } from "@/components/home/ResumeUpload";
 import { NicheSelector } from "@/components/radar/NicheSelector";
 import { ToolsAlreadyUsing } from "@/components/radar/ToolsAlreadyUsing";
 import { skillsFromString, skillsToString } from "@/lib/storage";
@@ -14,6 +15,9 @@ interface ProfileFormProps {
     niche: Niche;
     skills: string[];
     alreadyUsing: string[];
+    resumeFileName?: string;
+    resumeText?: string;
+    resumeParsedAt?: string;
   }) => void;
   onReset: () => void;
 }
@@ -27,6 +31,11 @@ export function ProfileForm({
   const [niche, setNiche] = useState(profile.niche);
   const [skills, setSkills] = useState(skillsToString(profile.skills));
   const [alreadyUsing, setAlreadyUsing] = useState(profile.alreadyUsing);
+  const [resumeMeta, setResumeMeta] = useState({
+    resumeFileName: profile.resumeFileName,
+    resumeText: profile.resumeText,
+    resumeParsedAt: profile.resumeParsedAt,
+  });
   const [saved, setSaved] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
@@ -35,6 +44,7 @@ export function ProfileForm({
       niche,
       skills: skillsFromString(skills),
       alreadyUsing: alreadyUsing.filter((id) => tools.some((t) => t.id === id)),
+      ...resumeMeta,
     });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -42,6 +52,21 @@ export function ProfileForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <ResumeUpload
+        profile={profile}
+        onParsed={(data) => {
+          setNiche(data.niche);
+          setSkills(skillsToString(data.skills));
+          setAlreadyUsing(
+            data.alreadyUsing.filter((id) => tools.some((t) => t.id === id))
+          );
+          setResumeMeta({
+            resumeFileName: data.resumeFileName,
+            resumeText: data.resumeText,
+            resumeParsedAt: data.resumeParsedAt,
+          });
+        }}
+      />
       <NicheSelector
         niche={niche}
         skills={skills}

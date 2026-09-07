@@ -21,7 +21,7 @@ export function HomeDashboard({ tools, toolCount }: HomeDashboardProps) {
   const nicheLabel =
     NICHES.find((n) => n.value === profile.niche)?.label ?? profile.niche;
 
-  const profileKey = `${profile.niche}|${profile.skills.join(",")}|${profile.alreadyUsing.join(",")}`;
+  const profileKey = `${profile.niche}|${profile.skills.join(",")}|${profile.alreadyUsing.join(",")}|${profile.resumeFileName ?? ""}`;
 
   return (
     <>
@@ -73,6 +73,12 @@ export function HomeDashboard({ tools, toolCount }: HomeDashboardProps) {
                 <dt className="text-[var(--color-text-muted)]">Skills</dt>
                 <dd className="font-mono text-[var(--color-text)] text-right">
                   {skillsToString(profile.skills) || "—"}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-[var(--color-text-muted)]">Resume</dt>
+                <dd className="font-mono text-[var(--color-text-dim)] text-right">
+                  {profile.resumeFileName ?? "Not uploaded"}
                 </dd>
               </div>
               <div className="flex justify-between gap-4">

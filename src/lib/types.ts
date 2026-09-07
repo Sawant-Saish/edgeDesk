@@ -125,6 +125,16 @@ export interface FreelancerProfile {
   alreadyUsing: string[];
   lastRadarAt?: string;
   lastScenarioId?: string;
+  resumeFileName?: string;
+  resumeText?: string;
+  resumeParsedAt?: string;
+}
+
+export interface ParsedResumeResponse {
+  niche: Niche;
+  skills: string[];
+  alreadyUsing: string[];
+  summary: string;
 }
 
 export const DEFAULT_PROFILE: FreelancerProfile = {

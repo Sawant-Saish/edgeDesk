@@ -28,6 +28,7 @@ interface CompleteOptions {
   messages: { role: "user" | "assistant"; content: string }[];
   maxTokens?: number;
   jsonMode?: boolean;
+  temperature?: number;
 }
 
 export async function complete({
@@ -35,6 +36,7 @@ export async function complete({
   messages,
   maxTokens = 250,
   jsonMode = false,
+  temperature = 0.8,
 }: CompleteOptions): Promise<string> {
   const apiKey = getApiKey();
   const model = getModel();
@@ -43,7 +45,7 @@ export async function complete({
     model,
     messages: [{ role: "system", content: system }, ...messages],
     max_tokens: maxTokens,
-    temperature: 0.8,
+    temperature,
   };
 
   if (jsonMode) {

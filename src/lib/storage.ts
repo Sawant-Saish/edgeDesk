@@ -50,6 +50,16 @@ export function loadProfile(): FreelancerProfile {
         typeof parsed.lastScenarioId === "string"
           ? parsed.lastScenarioId
           : undefined,
+      resumeFileName:
+        typeof parsed.resumeFileName === "string"
+          ? parsed.resumeFileName
+          : undefined,
+      resumeText:
+        typeof parsed.resumeText === "string" ? parsed.resumeText : undefined,
+      resumeParsedAt:
+        typeof parsed.resumeParsedAt === "string"
+          ? parsed.resumeParsedAt
+          : undefined,
     };
   } catch {
     return DEFAULT_PROFILE;

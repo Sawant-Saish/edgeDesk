@@ -32,8 +32,13 @@ export const USER_MESSAGES = {
   radarFailed: "Could not load tool recommendations. Please try again.",
   chatFailed: "Could not get a client reply. Please try again.",
   feedbackFailed: "Could not load coaching feedback. Please try again.",
+  resumeParseFailed:
+    "Could not analyze your document. Try a .txt or .md file, or edit the fields manually.",
+  resumeTooLarge: "File is too large. Please use a document under 1 MB.",
+  resumeUnsupported:
+    "Unsupported file type. Upload a .pdf, .txt, or .md resume.",
   llmMissing:
-    "Simulator requires an API key. Add OPENAI_API_KEY to .env.local (or Vercel env vars).",
+    "AI features require an API key. Add OPENAI_API_KEY to .env.local (or Vercel env vars).",
   invalidInput: "Please check your input and try again.",
   serverError: "Server error — please try again in a moment.",
 } as const;
