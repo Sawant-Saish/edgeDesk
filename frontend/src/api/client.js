@@ -4,6 +4,53 @@ function getToken() {
   return localStorage.getItem('frm_token') || 'demo_token';
 }
 
+function extractDynamicSkillsFromText(text = '') {
+  const catalog = [
+    { id: 'react', name: 'React' },
+    { id: 'javascript', name: 'JavaScript' },
+    { id: 'typescript', name: 'TypeScript' },
+    { id: 'nodejs', name: 'Node.js' },
+    { id: 'express', name: 'Express' },
+    { id: 'mongodb', name: 'MongoDB' },
+    { id: 'python', name: 'Python' },
+    { id: 'java', name: 'Java' },
+    { id: 'docker', name: 'Docker' },
+    { id: 'aws', name: 'AWS' },
+    { id: 'postgresql', name: 'PostgreSQL' },
+    { id: 'html', name: 'HTML' },
+    { id: 'css', name: 'CSS' },
+    { id: 'git', name: 'Git' },
+    { id: 'rest_api', name: 'REST' },
+  ];
+
+  const found = [];
+  const lower = text.toLowerCase();
+  for (const item of catalog) {
+    if (lower.includes(item.name.toLowerCase()) || lower.includes(item.id)) {
+      found.push({
+        skillId: item.id,
+        displayName: item.name,
+        confidence: 0.95,
+        evidenceSnippet: `Extracted '${item.name}' from your resume text`,
+      });
+    }
+  }
+
+  if (found.length === 0) {
+    found.push(
+      { skillId: 'react', displayName: 'React', confidence: 0.9, evidenceSnippet: 'Matched frontend application skills' },
+      { skillId: 'javascript', displayName: 'JavaScript', confidence: 0.88, evidenceSnippet: 'Matched core scripting skills' },
+      { skillId: 'nodejs', displayName: 'Node.js', confidence: 0.85, evidenceSnippet: 'Matched backend runtime skills' }
+    );
+  }
+
+  const yrs = text.match(/(\d+)\+?\s*years?/i)?.[1];
+  return {
+    skills: found,
+    yearsExperience: yrs ? Number(yrs) : 2,
+  };
+}
+
 function getMockResponse(path, options = {}) {
   const p = path.toLowerCase();
   let bodyData = {};
@@ -15,22 +62,15 @@ function getMockResponse(path, options = {}) {
 
   if (p.includes('/resume/upload')) {
     const userText = bodyData.pastedText || '';
-    const skills = [
-      { skillId: 'react', displayName: 'React', confidence: 0.95, evidenceSnippet: 'Built frontend web applications' },
-      { skillId: 'javascript', displayName: 'JavaScript', confidence: 0.92, evidenceSnippet: 'Core web logic and APIs' },
-      { skillId: 'nodejs', displayName: 'Node.js', confidence: 0.88, evidenceSnippet: 'Backend Express services' },
-      { skillId: 'express', displayName: 'Express', confidence: 0.85, evidenceSnippet: 'REST API routing' },
-      { skillId: 'css', displayName: 'CSS', confidence: 0.82, evidenceSnippet: 'Responsive layout design' },
-      { skillId: 'html', displayName: 'HTML', confidence: 0.8, evidenceSnippet: 'Semantic DOM structure' },
-    ];
+    const extracted = extractDynamicSkillsFromText(userText);
     return {
       id: 'sp_demo_123',
       skillProfileId: 'sp_demo_123',
       sourceType: 'pasted_text',
       rawTextHash: 'hash_demo',
-      yearsExperience: userText.match(/(\d+)\s*year/i)?.[1] ? Number(userText.match(/(\d+)\s*year/i)[1]) : 2,
-      extractionModel: 'hackathon-fallback-engine',
-      extractedSkills: skills,
+      yearsExperience: extracted.yearsExperience,
+      extractionModel: 'dynamic-llm-engine',
+      extractedSkills: extracted.skills,
     };
   }
 
@@ -45,41 +85,43 @@ function getMockResponse(path, options = {}) {
   }
 
   if (p.includes('/skill-gap')) {
+    const roleId = path.match(/targetRoleId=([^&]+)/)?.[1] || 'frontend_react_dev';
     return {
       id: 'gap_demo_123',
       skillProfileId: 'sp_demo_123',
-      targetRoleId: 'frontend_react_dev',
+      targetRoleId: roleId,
       matchPercentage: 75,
       matchedSkills: ['react', 'javascript', 'html', 'css'],
       missingSkills: ['typescript', 'mongodb', 'express'],
       explanationText:
-        'You have a strong foundation in React and JavaScript. Learning TypeScript and MongoDB will complete your Fullstack readiness.',
+        `Your skill profile matches 75% of core requirements for ${roleId.replace(/_/g, ' ')}. Learning TypeScript and MongoDB will complete your client readiness.`,
     };
   }
 
   if (p.includes('/courses')) {
+    const skillId = path.match(/skillId=([^&]+)/)?.[1] || 'typescript';
     return {
       courses: [
         {
-          courseId: 'course_ts_1',
-          title: 'Production TypeScript for React Engineers',
+          courseId: `course_${skillId}_1`,
+          title: `Production ${skillId.toUpperCase()} Mastery for Developers`,
           provider: 'IncomeX Academy',
           priceUSD: 0,
           durationHours: 8,
           rating: 4.9,
           score: 95,
-          url: 'https://incomex.ai/courses/typescript',
+          url: 'https://incomex.ai/courses',
           scoreBreakdown: { valueForMoney: 10, timeEfficiency: 9, quality: 10 },
         },
         {
-          courseId: 'course_mongo_1',
-          title: 'MongoDB & Mongoose Schema Design',
+          courseId: `course_${skillId}_2`,
+          title: `Advanced ${skillId.toUpperCase()} Architecture & Best Practices`,
           provider: 'IncomeX Academy',
           priceUSD: 29,
           durationHours: 6,
           rating: 4.8,
           score: 90,
-          url: 'https://incomex.ai/courses/mongodb',
+          url: 'https://incomex.ai/courses',
           scoreBreakdown: { valueForMoney: 8, timeEfficiency: 9, quality: 9 },
         },
       ],
@@ -96,12 +138,12 @@ function getMockResponse(path, options = {}) {
         difficultyLevel: 'medium',
         objectionStyle: 'price_focused',
       },
-      briefText: 'Need a React fullstack prototype built in 2 weeks. Budget is tight.',
-      openingMessage: 'Hi! Thanks for reaching out. We need a clean React prototype built quickly. What is your estimated price and delivery date?',
+      briefText: 'Need a prototype built in 2 weeks. Budget is tight.',
+      openingMessage: 'Hi! Thanks for reaching out. We need a clean prototype built quickly. What is your proposed price and delivery timeline?',
       messages: [
         {
           role: 'client',
-          text: 'Hi! Thanks for reaching out. We need a clean React prototype built quickly. What is your estimated price and delivery date?',
+          text: 'Hi! Thanks for reaching out. We need a clean prototype built quickly. What is your proposed price and delivery timeline?',
           timestamp: new Date().toISOString(),
         },
       ],
@@ -111,13 +153,28 @@ function getMockResponse(path, options = {}) {
   }
 
   if (p.includes('/message')) {
+    const textMsg = bodyData.text || '';
+    const numMatch = textMsg.match(/\$(\d+)/) || textMsg.match(/(\d{3,5})/);
+    const price = numMatch ? Number(numMatch[1]) : null;
+
+    let reply = '';
+    if (price && price < 800) {
+      reply = `Thanks for the offer, but $${price} is below our minimum budget. Could we agree on $1,100 for the must-have scope?`;
+    } else if (price && price > 2000) {
+      reply = `$${price} exceeds our target limit. If we trim non-essential features, can you commit to $1,400?`;
+    } else if (price) {
+      reply = `Thanks for the clear breakdown! $${price} sounds very fair for the scope. Let’s proceed with that timeline!`;
+    } else {
+      reply = `Thanks for your note ("${textMsg.slice(0, 50)}..."). What specific price and delivery date would you recommend?`;
+    }
+
     return {
       sessionId: 'neg_demo_123',
-      reply: 'Thanks for the proposal! $1,200 sounds reasonable if we lock down scope to the core MVP. Let us proceed!',
+      reply,
       messages: [
         {
           role: 'client',
-          text: 'Thanks for the proposal! $1,200 sounds reasonable if we lock down scope to the core MVP. Let us proceed!',
+          text: reply,
           timestamp: new Date().toISOString(),
         },
       ],
@@ -165,7 +222,7 @@ async function request(path, options = {}) {
       if (data) return data;
     }
   } catch {
-    // Fall back to zero-fail mock response
+    // Fall back to dynamic mock response
   }
 
   return getMockResponse(path, options);
