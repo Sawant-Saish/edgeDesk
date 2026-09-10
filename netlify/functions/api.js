@@ -2,10 +2,11 @@ const serverless = require('serverless-http');
 const { createApp } = require('../../backend/app');
 
 const app = createApp();
-const handler = serverless(app);
+const handler = serverless(app, {
+  binary: ['multipart/form-data', 'application/pdf', 'image/*', 'application/octet-stream'],
+});
 
 module.exports.handler = async (event, context) => {
-  // Normalize event.path for Netlify redirect handling
   if (event.path) {
     if (event.path.startsWith('/.netlify/functions/api')) {
       event.path = event.path.replace('/.netlify/functions/api', '/api');

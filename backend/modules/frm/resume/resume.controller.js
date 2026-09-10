@@ -20,6 +20,12 @@ async function uploadResume(req, res) {
     let text = '';
     let sourceType = 'pasted_text';
 
+    if (typeof req.body === 'string') {
+      try {
+        req.body = JSON.parse(req.body);
+      } catch {}
+    }
+
     if (req.file) {
       sourceType = 'pdf';
       text = await resumeService.extractTextFromPdf(req.file.buffer);
