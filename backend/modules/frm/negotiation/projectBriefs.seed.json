@@ -1,0 +1,110 @@
+[
+  {
+    "briefId": "landing-page-startup",
+    "title": "Startup Landing Page",
+    "briefText": "Need a responsive marketing landing page for a SaaS waitlist. Must include hero, pricing teaser, and email capture. Timeline: 2 weeks.",
+    "budgetRangeUSD": { "min": 400, "max": 900 },
+    "difficultyLevel": "easy",
+    "objectionStyle": "price_focused",
+    "personaName": "Priya, Startup Founder"
+  },
+  {
+    "briefId": "portfolio-redesign",
+    "title": "Agency Portfolio Redesign",
+    "briefText": "Redesign our creative agency portfolio site. Keep existing content, modernize UI, add case-study pages. Timeline: 3 weeks.",
+    "budgetRangeUSD": { "min": 800, "max": 1600 },
+    "difficultyLevel": "easy",
+    "objectionStyle": "deadline_pressure",
+    "personaName": "Marcus, Creative Director"
+  },
+  {
+    "briefId": "ecommerce-mvp",
+    "title": "Small E-commerce MVP",
+    "briefText": "Build an MVP storefront with product listing, cart, and Stripe checkout. Inventory under 50 SKUs. Timeline: 4 weeks.",
+    "budgetRangeUSD": { "min": 1500, "max": 3200 },
+    "difficultyLevel": "medium",
+    "objectionStyle": "scope_creep",
+    "personaName": "Elena, Boutique Owner"
+  },
+  {
+    "briefId": "admin-dashboard",
+    "title": "Internal Admin Dashboard",
+    "briefText": "React admin dashboard for order tracking with charts, filters, and CSV export. Auth already exists. Timeline: 3 weeks.",
+    "budgetRangeUSD": { "min": 1200, "max": 2500 },
+    "difficultyLevel": "medium",
+    "objectionStyle": "price_focused",
+    "personaName": "David, Ops Manager"
+  },
+  {
+    "briefId": "api-integration",
+    "title": "Third-party API Integration",
+    "briefText": "Integrate Shopify + HubSpot into our Node backend. Need webhooks, retries, and logging. Timeline: 2 weeks.",
+    "budgetRangeUSD": { "min": 900, "max": 1800 },
+    "difficultyLevel": "medium",
+    "objectionStyle": "deadline_pressure",
+    "personaName": "Sofia, Product Lead"
+  },
+  {
+    "briefId": "mobile-responsive-fix",
+    "title": "Legacy Site Mobile Fix",
+    "briefText": "Make our 2018 marketing site fully responsive without rewriting the CMS. Fix critical mobile bugs. Timeline: 10 days.",
+    "budgetRangeUSD": { "min": 500, "max": 1100 },
+    "difficultyLevel": "easy",
+    "objectionStyle": "scope_creep",
+    "personaName": "James, Marketing Manager"
+  },
+  {
+    "briefId": "auth-system",
+    "title": "Auth & Roles Overhaul",
+    "briefText": "Replace session cookies with JWT + OAuth (Google). Add role-based access for admin/editor. Timeline: 3 weeks.",
+    "budgetRangeUSD": { "min": 1400, "max": 2800 },
+    "difficultyLevel": "hard",
+    "objectionStyle": "price_focused",
+    "personaName": "Aisha, CTO"
+  },
+  {
+    "briefId": "realtime-chat",
+    "title": "Real-time Support Chat Widget",
+    "briefText": "Embeddable chat widget with WebSockets, agent inbox, and basic analytics. Timeline: 4 weeks.",
+    "budgetRangeUSD": { "min": 2000, "max": 4000 },
+    "difficultyLevel": "hard",
+    "objectionStyle": "scope_creep",
+    "personaName": "Tom, Customer Success Head"
+  },
+  {
+    "briefId": "graphql-migration",
+    "title": "REST to GraphQL Migration",
+    "briefText": "Expose our existing REST data via GraphQL for a new React client. Keep REST for legacy. Timeline: 5 weeks.",
+    "budgetRangeUSD": { "min": 2200, "max": 4500 },
+    "difficultyLevel": "hard",
+    "objectionStyle": "deadline_pressure",
+    "personaName": "Nina, Engineering Manager"
+  },
+  {
+    "briefId": "testing-suite",
+    "title": "Test Suite for React App",
+    "briefText": "Add Jest + React Testing Library coverage for critical flows; aim 70% on key modules. Timeline: 2 weeks.",
+    "budgetRangeUSD": { "min": 700, "max": 1500 },
+    "difficultyLevel": "medium",
+    "objectionStyle": "price_focused",
+    "personaName": "Chris, QA Lead"
+  },
+  {
+    "briefId": "dockerize-app",
+    "title": "Dockerize MERN App",
+    "briefText": "Containerize frontend, API, and Mongo with docker-compose for staging. Document deploy steps. Timeline: 1 week.",
+    "budgetRangeUSD": { "min": 600, "max": 1200 },
+    "difficultyLevel": "easy",
+    "objectionStyle": "deadline_pressure",
+    "personaName": "Ravi, DevOps Coordinator"
+  },
+  {
+    "briefId": "performance-audit",
+    "title": "Frontend Performance Pass",
+    "briefText": "Audit and improve Lighthouse scores on our Next.js site: images, bundle size, caching. Timeline: 10 days.",
+    "budgetRangeUSD": { "min": 800, "max": 1700 },
+    "difficultyLevel": "medium",
+    "objectionStyle": "scope_creep",
+    "personaName": "Olivia, Growth Lead"
+  }
+]
