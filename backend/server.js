@@ -1,54 +1,11 @@
 require('dotenv').config();
-
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+const { createApp, initDB } = require('./app');
 
 const PORT = process.env.PORT || 5000;
 
 async function bootstrap() {
-  const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/edgedesk_frm';
-  let usingMemory = false;
-
-  try {
-    await mongoose.connect(uri, { serverSelectionTimeoutMS: 2500 });
-    console.log('[mongo] connected');
-  } catch (err) {
-    console.warn('[mongo] unavailable — installing in-memory store:', err.message);
-    require('./devMemoryStore').install();
-    usingMemory = true;
-  }
-
-  // Load routes AFTER store/models are ready
-  const { authMiddleware } = require('./middleware/auth');
-  const authRoutes = require('./routes/auth.routes');
-  const frmRoutes = require('./modules/frm/frm.routes');
-
-  const app = express();
-  app.use(cors({ origin: true, credentials: true }));
-  app.use(express.json({ limit: '2mb' }));
-
-  app.get('/api/health', (_req, res) => {
-    res.json({
-      ok: true,
-      module: 'frm',
-      storage: usingMemory ? 'memory' : 'mongo',
-      llmMock:
-        process.env.LLM_MOCK === 'true' ||
-        (!process.env.ANTHROPIC_API_KEY && !process.env.OPENAI_API_KEY),
-    });
-  });
-
-  app.use('/api/auth', authRoutes);
-  app.use('/api/frm', authMiddleware, frmRoutes);
-
-  app.use((err, _req, res, _next) => {
-    console.error('[server]', err);
-    res.status(500).json({
-      error: 'server_error',
-      message: err.message || 'Unexpected server error.',
-    });
-  });
+  await initDB();
+  const app = createApp();
 
   app.listen(PORT, () => {
     console.log(`[frm] API listening on http://localhost:${PORT}`);
