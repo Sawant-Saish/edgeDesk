@@ -13,7 +13,7 @@ async function initDB() {
 
   // On serverless / public demo where MONGO_URI is missing, localhost, or 'memory',
   // instantly activate in-memory store so visitors get zero-delay instant MVP access.
-  const isServerless = Boolean(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  const isServerless = Boolean(process.env.NETLIFY || process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || true);
   const isLocalHost = !uri || uri.includes('127.0.0.1') || uri.includes('localhost') || uri === 'memory';
 
   if ((isServerless && isLocalHost) || uri === 'memory') {
