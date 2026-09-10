@@ -46,14 +46,11 @@ function createApp() {
 
   const app = express();
   app.use(cors({ origin: true, credentials: true }));
-  app.use(express.json({ limit: '2mb' }));
+  app.use(express.json({ limit: '10mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-  app.use(async (req, _res, next) => {
+  app.use(async (_req, _res, next) => {
     await initDB();
-    // Normalize path for Netlify Functions when prefix /.netlify/functions/api is present
-    if (req.url.startsWith('/.netlify/functions/api')) {
-      req.url = req.url.replace('/.netlify/functions/api', '/api');
-    }
     next();
   });
 
@@ -68,9 +65,11 @@ function createApp() {
     });
   };
 
-  app.get(['/api/health', '/health'], healthHandler);
-  app.use(['/api/auth', '/auth'], authRoutes);
-  app.use(['/api/frm', '/frm'], authMiddleware, frmRoutes);
+  app.get(['/api/health', '/health', '/.netlify/functions/api/health'], healthHandler);
+  app.use(['/api/auth', '/auth', '/.netlify/functions/api/auth'], authRoutes);
+  app.use(['/api/frm', '/frm', '/.netlify/functions/api/frm', '/.netlify/functions/api'], authMiddleware, frmRoutes);
+  app.use('/api', authMiddleware, frmRoutes);
+  app.use('/', authMiddleware, frmRoutes);
 
   app.use((err, _req, res, _next) => {
     console.error('[server]', err);
