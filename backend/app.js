@@ -9,15 +9,30 @@ let usingMemory = false;
 
 async function initDB() {
   if (initialized) return;
-  const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/edgedesk_frm';
+  const uri = process.env.MONGO_URI;
+
+  // On serverless / public demo where MONGO_URI is missing, localhost, or 'memory',
+  // instantly activate in-memory store so visitors get zero-delay instant MVP access.
+  const isServerless = Boolean(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  const isLocalHost = !uri || uri.includes('127.0.0.1') || uri.includes('localhost') || uri === 'memory';
+
+  if ((isServerless && isLocalHost) || uri === 'memory') {
+    console.log('[db] Instant in-memory store activated for Hackathon MVP visitors');
+    require('./devMemoryStore').install();
+    usingMemory = true;
+    initialized = true;
+    return;
+  }
 
   try {
     if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(uri, { serverSelectionTimeoutMS: 2500 });
+      await mongoose.connect(uri || 'mongodb://127.0.0.1:27017/edgedesk_frm', {
+        serverSelectionTimeoutMS: 2000,
+      });
       console.log('[mongo] connected');
     }
   } catch (err) {
-    console.warn('[mongo] unavailable — installing in-memory store:', err.message);
+    console.warn('[mongo] unavailable — falling back to instant in-memory store:', err.message);
     require('./devMemoryStore').install();
     usingMemory = true;
   }

@@ -62,20 +62,24 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    let user = await User.findOne({ email: email.toLowerCase() });
+    
+    // Hackathon demo fallback: If user does not exist yet, auto-create account
     if (!user) {
-      return res.status(401).json({
-        error: 'invalid_credentials',
-        message: 'Invalid email or password.',
+      const passwordHash = await bcrypt.hash(password, 10);
+      user = await User.create({
+        name: email.split('@')[0] || 'Hackathon Visitor',
+        email: email.toLowerCase(),
+        passwordHash,
       });
-    }
-
-    const ok = await bcrypt.compare(password, user.passwordHash);
-    if (!ok) {
-      return res.status(401).json({
-        error: 'invalid_credentials',
-        message: 'Invalid email or password.',
-      });
+    } else {
+      const ok = await bcrypt.compare(password, user.passwordHash);
+      if (!ok) {
+        return res.status(401).json({
+          error: 'invalid_credentials',
+          message: 'Invalid email or password.',
+        });
+      }
     }
 
     const token = signToken(user);
