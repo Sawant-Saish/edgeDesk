@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { createModelWrapper } = require('../../../modelFactory');
 
 const SkillGapResultSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -10,4 +11,5 @@ const SkillGapResultSchema = new mongoose.Schema({
   computedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('SkillGapResult', SkillGapResultSchema);
+const MongooseSkillGapResult = mongoose.model('SkillGapResult', SkillGapResultSchema);
+module.exports = createModelWrapper('SkillGapResult', MongooseSkillGapResult);

@@ -1,8 +1,6 @@
-/**
- * Dev fallback when MongoDB is unavailable.
- */
 const crypto = require('crypto');
-const path = require('path');
+
+let memoryActive = false;
 
 function oid() {
   return crypto.randomBytes(12).toString('hex');
@@ -105,48 +103,25 @@ function createStore() {
   };
 }
 
-function makeModel(store) {
-  function Model(data) {
-    Object.assign(this, data);
-  }
-  Model.create = (data) => store.create(data);
-  Model.findOne = (query) => store.findOne(query);
-  Model.find = (query) => store.find(query);
-  return Model;
-}
+const stores = {
+  User: createStore(),
+  SkillProfile: createStore(),
+  SkillGapResult: createStore(),
+  NegotiationSession: createStore(),
+};
 
 function install() {
-  const stores = {
-    User: createStore(),
-    SkillProfile: createStore(),
-    SkillGapResult: createStore(),
-    NegotiationSession: createStore(),
-  };
-
-  const targets = {
-    [path.join(__dirname, 'models', 'User.js')]: makeModel(stores.User),
-    [path.join(__dirname, 'modules', 'frm', 'resume', 'resume.model.js')]: makeModel(
-      stores.SkillProfile
-    ),
-    [path.join(__dirname, 'modules', 'frm', 'skillGap', 'skillGap.model.js')]: makeModel(
-      stores.SkillGapResult
-    ),
-    [path.join(__dirname, 'modules', 'frm', 'negotiation', 'negotiation.model.js')]:
-      makeModel(stores.NegotiationSession),
-  };
-
-  for (const [filename, exports] of Object.entries(targets)) {
-    require.cache[filename] = {
-      id: filename,
-      filename,
-      loaded: true,
-      exports,
-      children: [],
-      paths: [],
-    };
-  }
-
-  console.log('[devMemoryStore] ready');
+  memoryActive = true;
+  console.log('[devMemoryStore] ready & active');
 }
 
-module.exports = { install };
+function isMemoryActive() {
+  return memoryActive;
+}
+
+function getStore(name) {
+  if (!stores[name]) stores[name] = createStore();
+  return stores[name];
+}
+
+module.exports = { install, isMemoryActive, getStore };

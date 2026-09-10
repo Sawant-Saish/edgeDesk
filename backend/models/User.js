@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { createModelWrapper } = require('../modelFactory');
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -7,4 +8,5 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+const MongooseUser = mongoose.model('User', UserSchema);
+module.exports = createModelWrapper('User', MongooseUser);

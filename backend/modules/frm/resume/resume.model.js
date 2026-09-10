@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { createModelWrapper } = require('../../../modelFactory');
 
 const SkillProfileSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -16,4 +17,5 @@ const SkillProfileSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('SkillProfile', SkillProfileSchema);
+const MongooseSkillProfile = mongoose.model('SkillProfile', SkillProfileSchema);
+module.exports = createModelWrapper('SkillProfile', MongooseSkillProfile);

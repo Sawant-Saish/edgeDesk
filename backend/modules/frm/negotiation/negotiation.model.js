@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { createModelWrapper } = require('../../../modelFactory');
 
 const NegotiationSessionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -31,4 +32,5 @@ const NegotiationSessionSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('NegotiationSession', NegotiationSessionSchema);
+const MongooseNegotiationSession = mongoose.model('NegotiationSession', NegotiationSessionSchema);
+module.exports = createModelWrapper('NegotiationSession', MongooseNegotiationSession);
