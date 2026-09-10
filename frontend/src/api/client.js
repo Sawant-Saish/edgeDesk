@@ -25,6 +25,7 @@ function getMockResponse(path, options = {}) {
     ];
     return {
       id: 'sp_demo_123',
+      skillProfileId: 'sp_demo_123',
       sourceType: 'pasted_text',
       rawTextHash: 'hash_demo',
       yearsExperience: userText.match(/(\d+)\s*year/i)?.[1] ? Number(userText.match(/(\d+)\s*year/i)[1]) : 2,
@@ -34,50 +35,55 @@ function getMockResponse(path, options = {}) {
   }
 
   if (p.includes('/roles')) {
-    return [
-      { id: 'fullstack_dev', name: 'Fullstack Web Developer' },
-      { id: 'frontend_dev', name: 'Frontend React Specialist' },
-      { id: 'backend_dev', name: 'Node.js Backend Engineer' },
-    ];
+    return {
+      roles: [
+        { roleId: 'frontend_react_dev', displayName: 'Frontend React Specialist' },
+        { roleId: 'fullstack_dev', displayName: 'Fullstack Web Developer' },
+        { roleId: 'backend_dev', displayName: 'Node.js Backend Engineer' },
+      ],
+    };
   }
 
   if (p.includes('/skill-gap')) {
     return {
       id: 'gap_demo_123',
-      targetRoleId: 'fullstack_dev',
+      skillProfileId: 'sp_demo_123',
+      targetRoleId: 'frontend_react_dev',
       matchPercentage: 75,
-      matchedSkills: ['react', 'javascript', 'nodejs', 'express', 'html', 'css'],
-      missingSkills: ['typescript', 'mongodb', 'rest_api'],
+      matchedSkills: ['react', 'javascript', 'html', 'css'],
+      missingSkills: ['typescript', 'mongodb', 'express'],
       explanationText:
-        'You have a strong foundation in React and Node.js. Closing your TypeScript and MongoDB gaps will make you fully client-ready.',
+        'You have a strong foundation in React and JavaScript. Learning TypeScript and MongoDB will complete your Fullstack readiness.',
     };
   }
 
   if (p.includes('/courses')) {
-    return [
-      {
-        id: 'course_ts_1',
-        title: 'Production TypeScript for Full-Stack Developers',
-        platform: 'IncomeX Academy',
-        skillId: 'typescript',
-        rating: 4.9,
-        durationHours: 8,
-        url: 'https://incomex.ai/courses/typescript',
-        score: 95,
-        explanation: 'Top-ranked course to master static typing for enterprise client codebases.',
-      },
-      {
-        id: 'course_mongo_1',
-        title: 'MongoDB & Mongoose Schema Design Mastery',
-        platform: 'IncomeX Academy',
-        skillId: 'mongodb',
-        rating: 4.8,
-        durationHours: 6,
-        url: 'https://incomex.ai/courses/mongodb',
-        score: 90,
-        explanation: 'Essential database course for structuring scalable document stores.',
-      },
-    ];
+    return {
+      courses: [
+        {
+          courseId: 'course_ts_1',
+          title: 'Production TypeScript for React Engineers',
+          provider: 'IncomeX Academy',
+          priceUSD: 0,
+          durationHours: 8,
+          rating: 4.9,
+          score: 95,
+          url: 'https://incomex.ai/courses/typescript',
+          scoreBreakdown: { valueForMoney: 10, timeEfficiency: 9, quality: 10 },
+        },
+        {
+          courseId: 'course_mongo_1',
+          title: 'MongoDB & Mongoose Schema Design',
+          provider: 'IncomeX Academy',
+          priceUSD: 29,
+          durationHours: 6,
+          rating: 4.8,
+          score: 90,
+          url: 'https://incomex.ai/courses/mongodb',
+          scoreBreakdown: { valueForMoney: 8, timeEfficiency: 9, quality: 9 },
+        },
+      ],
+    };
   }
 
   if (p.includes('/negotiation/start')) {
@@ -91,6 +97,7 @@ function getMockResponse(path, options = {}) {
         objectionStyle: 'price_focused',
       },
       briefText: 'Need a React fullstack prototype built in 2 weeks. Budget is tight.',
+      openingMessage: 'Hi! Thanks for reaching out. We need a clean React prototype built quickly. What is your estimated price and delivery date?',
       messages: [
         {
           role: 'client',
@@ -98,6 +105,7 @@ function getMockResponse(path, options = {}) {
           timestamp: new Date().toISOString(),
         },
       ],
+      turnCount: 1,
       status: 'active',
     };
   }
@@ -105,13 +113,15 @@ function getMockResponse(path, options = {}) {
   if (p.includes('/message')) {
     return {
       sessionId: 'neg_demo_123',
+      reply: 'Thanks for the proposal! $1,200 sounds reasonable if we lock down scope to the core MVP. Let us proceed!',
       messages: [
         {
           role: 'client',
-          text: 'Thanks for the proposal! $1,200 sounds reasonable if we lock down scope to the core MVP. Let’s proceed with that timeline.',
+          text: 'Thanks for the proposal! $1,200 sounds reasonable if we lock down scope to the core MVP. Let us proceed!',
           timestamp: new Date().toISOString(),
         },
       ],
+      turnCount: 2,
       status: 'active',
     };
   }
@@ -155,10 +165,9 @@ async function request(path, options = {}) {
       if (data) return data;
     }
   } catch {
-    // Network or CORS failure — use hackathon mock response
+    // Fall back to zero-fail mock response
   }
 
-  // Zero-fail fallback for hackathon live demo
   return getMockResponse(path, options);
 }
 

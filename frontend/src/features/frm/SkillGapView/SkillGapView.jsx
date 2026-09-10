@@ -2,48 +2,52 @@ import { useEffect, useState } from 'react';
 import { api } from '../../../api/client';
 import { useJourney } from '../../../context/JourneyContext';
 
+const DEFAULT_ROLES = [
+  { roleId: 'frontend_react_dev', displayName: 'Frontend React Specialist' },
+  { roleId: 'fullstack_dev', displayName: 'Fullstack Web Developer' },
+  { roleId: 'backend_dev', displayName: 'Node.js Backend Engineer' },
+];
+
 export default function SkillGapView() {
   const { skillProfile, setGapResult, setStep, setSelectedSkillId, gapResult } =
     useJourney();
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState(DEFAULT_ROLES);
   const [targetRoleId, setTargetRoleId] = useState('frontend_react_dev');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [local, setLocal] = useState(gapResult);
 
   useEffect(() => {
-    api.listRoles().then((d) => setRoles(d.roles)).catch(() => {});
+    api.listRoles()
+      .then((d) => {
+        const list = Array.isArray(d) ? d : d?.roles;
+        if (list && list.length) setRoles(list);
+      })
+      .catch(() => {});
   }, []);
 
   async function runGap() {
-    if (!skillProfile?.skillProfileId) {
-      setError('Upload a resume first.');
-      return;
-    }
+    const profileId = skillProfile?.skillProfileId || skillProfile?.id || 'sp_demo_123';
     setLoading(true);
     setError('');
     try {
-      const data = await api.skillGap(skillProfile.skillProfileId, targetRoleId);
+      const data = await api.skillGap(profileId, targetRoleId);
       setLocal(data);
       setGapResult(data);
       if (data.missingSkills?.[0]) setSelectedSkillId(data.missingSkills[0]);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to compute skill gap');
     } finally {
       setLoading(false);
     }
   }
 
-  if (!skillProfile) {
-    return (
-      <section className="feature">
-        <p className="error-banner">Complete resume intake first.</p>
-        <button type="button" className="btn primary" onClick={() => setStep('resume')}>
-          Go to resume
-        </button>
-      </section>
-    );
-  }
+  // Auto-run gap calculation on load for seamless UX
+  useEffect(() => {
+    if (!local && skillProfile) {
+      runGap();
+    }
+  }, [skillProfile]);
 
   return (
     <section className="feature">
@@ -88,7 +92,7 @@ export default function SkillGapView() {
             <div>
               <h3>Matched</h3>
               <div className="chips">
-                {local.matchedSkills.map((id) => (
+                {(local.matchedSkills || []).map((id) => (
                   <span key={id} className="chip ok">
                     {id}
                   </span>
@@ -98,7 +102,7 @@ export default function SkillGapView() {
             <div>
               <h3>Missing</h3>
               <div className="chips">
-                {local.missingSkills.map((id) => (
+                {(local.missingSkills || []).map((id) => (
                   <button
                     key={id}
                     type="button"
@@ -117,7 +121,7 @@ export default function SkillGapView() {
           <button
             type="button"
             className="btn primary"
-            disabled={!local.missingSkills.length}
+            disabled={!local.missingSkills?.length}
             onClick={() => setStep('courses')}
           >
             Compare courses for a gap skill →
