@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import { useJourney } from './context/JourneyContext';
 import ResumeUpload from './features/frm/ResumeUpload/ResumeUpload';
@@ -18,130 +17,14 @@ const STEP_LABELS = {
 function PrototypeNotice() {
   return (
     <aside className="prototype-notice" role="note">
-      <strong>Attention:</strong> This is just a working prototype for a hackathon.
-      We will continue building and polishing it soon.
+      <strong>Attention:</strong> EdgeDesk Hackathon MVP — Open Access Mode.
     </aside>
   );
 }
 
-function AuthScreen() {
-  const { login, register } = useAuth();
-  const [mode, setMode] = useState('login');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  async function onSubmit(e) {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      if (mode === 'login') {
-        try {
-          await login(email, password);
-        } catch (loginErr) {
-          // If login fails because account doesn't exist yet, auto-register for seamless experience
-          if (loginErr.status === 401 || loginErr.message?.includes('Invalid')) {
-            await register(email.split('@')[0] || 'Freelancer', email, password);
-          } else {
-            throw loginErr;
-          }
-        }
-      } else {
-        await register(name || 'Freelancer', email, password);
-      }
-    } catch (err) {
-      setError(err.message || 'Sign in failed. Please check credentials or try Quick Demo Sign-In.');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function onQuickDemo() {
-    setError('');
-    setLoading(true);
-    const demoEmail = `demo_${Math.floor(Math.random() * 8999 + 1000)}@incomex.ai`;
-    try {
-      await register('Demo Freelancer', demoEmail, 'demo123456');
-    } catch {
-      try {
-        await login('demo@incomex.ai', 'demo123456');
-      } catch (err) {
-        setError(err.message || 'Demo sign-in failed');
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div className="auth-shell">
-      <PrototypeNotice />
-      <div className="auth-panel">
-        <p className="eyebrow">IncomeX module</p>
-        <h1 className="brand">EdgeDesk</h1>
-        <p className="lede">
-          Resume → skill gap → ranked courses → negotiation practice. One closed loop.
-        </p>
-        <form className="auth-form" onSubmit={onSubmit}>
-          {mode === 'register' && (
-            <label>
-              Name
-              <input value={name} onChange={(e) => setName(e.target.value)} required />
-            </label>
-          )}
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-            />
-          </label>
-          {error && <p className="error-banner">{error}</p>}
-          <button className="btn primary" type="submit" disabled={loading}>
-            {loading ? 'Working…' : mode === 'login' ? 'Sign in' : 'Create account'}
-          </button>
-          <button
-            className="btn secondary"
-            type="button"
-            style={{ marginTop: '8px' }}
-            onClick={onQuickDemo}
-            disabled={loading}
-          >
-            ⚡ Quick Demo Sign-In
-          </button>
-        </form>
-        <button
-          className="linkish"
-          type="button"
-          onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-        >
-          {mode === 'login' ? 'Need an account? Register' : 'Have an account? Sign in'}
-        </button>
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
-  const { isAuthed, user, logout } = useAuth();
+  const { user } = useAuth();
   const { step, setStep, STEPS, resetJourney } = useJourney();
-
-  if (!isAuthed) return <AuthScreen />;
 
   return (
     <div className="app-shell">
@@ -152,12 +35,9 @@ export default function App() {
           <h1 className="brand-sm">EdgeDesk</h1>
         </div>
         <div className="topbar-actions">
-          <span className="user-chip">{user?.name || user?.email}</span>
+          <span className="user-chip">{user?.name || 'Hackathon Visitor'}</span>
           <button className="btn ghost" type="button" onClick={resetJourney}>
-            Restart
-          </button>
-          <button className="btn ghost" type="button" onClick={logout}>
-            Sign out
+            Restart Demo
           </button>
         </div>
       </header>
