@@ -33,12 +33,16 @@ function createApp() {
   app.use(cors({ origin: true, credentials: true }));
   app.use(express.json({ limit: '2mb' }));
 
-  app.use(async (_req, _res, next) => {
+  app.use(async (req, _res, next) => {
     await initDB();
+    // Normalize path for Netlify Functions when prefix /.netlify/functions/api is present
+    if (req.url.startsWith('/.netlify/functions/api')) {
+      req.url = req.url.replace('/.netlify/functions/api', '/api');
+    }
     next();
   });
 
-  app.get('/api/health', (_req, res) => {
+  const healthHandler = (_req, res) => {
     res.json({
       ok: true,
       module: 'frm',
@@ -47,10 +51,11 @@ function createApp() {
         process.env.LLM_MOCK === 'true' ||
         (!process.env.ANTHROPIC_API_KEY && !process.env.OPENAI_API_KEY),
     });
-  });
+  };
 
-  app.use('/api/auth', authRoutes);
-  app.use('/api/frm', authMiddleware, frmRoutes);
+  app.get(['/api/health', '/health'], healthHandler);
+  app.use(['/api/auth', '/auth'], authRoutes);
+  app.use(['/api/frm', '/frm'], authMiddleware, frmRoutes);
 
   app.use((err, _req, res, _next) => {
     console.error('[server]', err);

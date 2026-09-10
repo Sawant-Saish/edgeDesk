@@ -38,10 +38,39 @@ function AuthScreen() {
     setError('');
     setLoading(true);
     try {
-      if (mode === 'login') await login(email, password);
-      else await register(name || 'Freelancer', email, password);
+      if (mode === 'login') {
+        try {
+          await login(email, password);
+        } catch (loginErr) {
+          // If login fails because account doesn't exist yet, auto-register for seamless experience
+          if (loginErr.status === 401 || loginErr.message?.includes('Invalid')) {
+            await register(email.split('@')[0] || 'Freelancer', email, password);
+          } else {
+            throw loginErr;
+          }
+        }
+      } else {
+        await register(name || 'Freelancer', email, password);
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Sign in failed. Please check credentials or try Quick Demo Sign-In.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function onQuickDemo() {
+    setError('');
+    setLoading(true);
+    const demoEmail = `demo_${Math.floor(Math.random() * 8999 + 1000)}@incomex.ai`;
+    try {
+      await register('Demo Freelancer', demoEmail, 'demo123456');
+    } catch {
+      try {
+        await login('demo@incomex.ai', 'demo123456');
+      } catch (err) {
+        setError(err.message || 'Demo sign-in failed');
+      }
     } finally {
       setLoading(false);
     }
@@ -85,6 +114,15 @@ function AuthScreen() {
           {error && <p className="error-banner">{error}</p>}
           <button className="btn primary" type="submit" disabled={loading}>
             {loading ? 'Working…' : mode === 'login' ? 'Sign in' : 'Create account'}
+          </button>
+          <button
+            className="btn secondary"
+            type="button"
+            style={{ marginTop: '8px' }}
+            onClick={onQuickDemo}
+            disabled={loading}
+          >
+            ⚡ Quick Demo Sign-In
           </button>
         </form>
         <button
